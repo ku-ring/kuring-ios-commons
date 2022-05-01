@@ -18,7 +18,7 @@ public struct ColorSet {
     public struct General {
         public static let green = UIColor(
             named: "ColorSet.green",
-            in: Bundle.commoncommonModule,
+            in: Bundle.commonModule,
             compatibleWith: nil
         ) ?? UIColor.green
         
