@@ -79,7 +79,7 @@ public struct ColorSet {
         ) ?? UIColor.green
     }
     
-    struct Background {
+    public struct Background {
         public static let primary = UIColor(
             named: "ColorSet.Background.primary",
             in: Bundle.module,
