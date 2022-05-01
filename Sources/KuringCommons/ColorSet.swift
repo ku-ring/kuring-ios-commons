@@ -18,37 +18,37 @@ public struct ColorSet {
     public struct General {
         public static let green = UIColor(
             named: "ColorSet.green",
-            in: Bundle.module,
+            in: Bundle.commoncommonModule,
             compatibleWith: nil
         ) ?? UIColor.green
         
         public static let secondaryGreen = UIColor(
             named: "ColorSet.secondaryGreen",
-            in: Bundle.module,
+            in: Bundle.commonModule,
             compatibleWith: nil
         ) ?? UIColor.green.withAlphaComponent(0.5)
         
         public static let pink = UIColor(
             named: "ColorSet.pink",
-            in: Bundle.module,
+            in: Bundle.commonModule,
             compatibleWith: nil
         ) ?? UIColor.systemPink
         
         public static let blue = UIColor(
             named: "ColorSet.blue",
-            in: Bundle.module,
+            in: Bundle.commonModule,
             compatibleWith: nil
         ) ?? UIColor.systemBlue
         
         public static let gray = UIColor(
             named: "ColorSet.gray",
-            in: Bundle.module,
+            in: Bundle.commonModule,
             compatibleWith: nil
         ) ?? UIColor.gray
         
         public static let secondaryGray = UIColor(
             named: "ColorSet.secondaryGray",
-            in: Bundle.module,
+            in: Bundle.commonModule,
             compatibleWith: nil
         ) ?? UIColor.lightGray
     }
@@ -56,25 +56,25 @@ public struct ColorSet {
     public struct Label {
         public static let primary = UIColor(
             named: "ColorSet.Label.primary",
-            in: Bundle.module,
+            in: Bundle.commonModule,
             compatibleWith: nil
         ) ?? UIColor.label
         
         public static let secondary = UIColor(
             named: "ColorSet.Label.secondary",
-            in: Bundle.module,
+            in: Bundle.commonModule,
             compatibleWith: nil
         ) ?? UIColor.secondaryLabel
         
         public static let tertiary = UIColor(
             named: "ColorSet.Label.tertiary",
-            in: Bundle.module,
+            in: Bundle.commonModule,
             compatibleWith: nil
         ) ?? UIColor.tertiaryLabel
         
         public static let green = UIColor(
             named: "ColorSet.Label.green",
-            in: Bundle.module,
+            in: Bundle.commonModule,
             compatibleWith: nil
         ) ?? UIColor.green
     }
@@ -82,7 +82,7 @@ public struct ColorSet {
     public struct Background {
         public static let primary = UIColor(
             named: "ColorSet.Background.primary",
-            in: Bundle.module,
+            in: Bundle.commonModule,
             compatibleWith: nil
         ) ?? UIColor.secondarySystemGroupedBackground
     }
