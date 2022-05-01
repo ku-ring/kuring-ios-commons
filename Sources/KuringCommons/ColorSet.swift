@@ -91,7 +91,7 @@ public struct ColorSet {
 import SwiftUI
 
 extension UIColor {
-    var color: Color {
+    public var color: Color {
         Color(uiColor: self)
     }
 }
