@@ -9,11 +9,16 @@ import UIKit
 
 /// 쿠링 프로젝트에 사용되는 색상 세트 입니다.
 public struct ColorSet {
-    public static var primary: UIColor { General.green }
+    /// 쿠링의 메인 테마 색상입니다. 기본값은 `General.green` 입니다. 값을 변경할 수도 있습니다.
+    public static var primary: UIColor = General.green
+    
     /// 쿠링 초록색 입니다. 버튼의 배경색상, 테두리 색상 등에 사용되며 다른 초록색 계열과 함께 사용되지 않도록 해야합니다.
     public static var green: UIColor { General.green }
     /// 쿠링 연한 초록색 입니다. (다크모드는 진한 초록색) 진한 초록색상과 동일한 컴포넌트에서 초록색상을 써야할 때 사용합니다.
     public static var secondaryGreen: UIColor { General.secondaryGreen }
+    /// 쿠링 3순위 초록색입니다. 살짝만 초륵색의 느낌을 주고 싶을 때 사용합니다. 주로 selector 의 배경색에 사용됩니다.
+    public static var tertiaryGreen: UIColor { General.tertiaryGreen }
+
     /// 쿠링 분홍색입니다. 에러나 삭제와 같이 위험성을 강조해야하는 경우에 사용됩니다.
     public static var pink: UIColor { General.pink }
     /// 쿠링 파란색입니다. 가급적 사용을 지양하며 초록색을 쓰는 것을 권장합니다.
@@ -39,6 +44,13 @@ public struct ColorSet {
             compatibleWith: nil
         ) ?? UIColor.green.withAlphaComponent(0.5)
         
+        /// 쿠링 3순위 초록색입니다. 살짝만 초륵색의 느낌을 주고 싶을 때 사용합니다. 주로 selector 의 배경색에 사용됩니다.
+        static let tertiaryGreen = UIColor(
+            named: "ColorSet.tertiaryGreen",
+            in: Bundle.commonModule,
+            compatibleWith: nil
+        ) ?? UIColor.green.withAlphaComponent(0.25)
+
         /// 쿠링 분홍색입니다. 에러나 삭제와 같이 위험성을 강조해야하는 경우에 사용됩니다.
         public static let pink = UIColor(
             named: "ColorSet.pink",
