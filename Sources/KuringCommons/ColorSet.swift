@@ -137,6 +137,10 @@ import SwiftUI
 extension UIColor {
     /// `SwiftUI.Color` 타입의 오브젝트를 리턴합니다.
     public var color: Color {
-        Color(uiColor: self)
+        if #available(iOS 15.0, *) {
+            return Color(uiColor: self)
+        } else {
+            return Color(self)
+        }
     }
 }

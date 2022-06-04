@@ -41,10 +41,17 @@ public class Logger {
     /// // ✅ Hi
     /// ```
     public static func debug(_ log: Any?, action: (() -> Void)? = nil) {
-        let time = Date().formatted(
-            date: .complete,
-            time: .complete
-        )
+        let time: String
+        if #available(iOS 15.0, *) {
+            time = Date().formatted(
+                date: .complete,
+                time: .complete
+            )
+        } else {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd-EE hh:mm a"
+            time = dateFormatter.string(from: Date())
+        }
 #if DEBUG
         guard Logger.printableModes.contains(.development) else { return }
         print("[com.kuring.service] [\(time)]\n✅ \(String(describing: log))")
@@ -67,10 +74,17 @@ public class Logger {
     /// // 🚨 Hi
     /// ```
     public static func error(_ log: String, action: (() -> Void)? = nil) {
-        let time = Date().formatted(
-            date: .complete,
-            time: .complete
-        )
+        let time: String
+        if #available(iOS 15.0, *) {
+            time = Date().formatted(
+                date: .complete,
+                time: .complete
+            )
+        } else {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd-EE hh:mm a"
+            time = dateFormatter.string(from: Date())
+        }
 #if DEBUG
         guard Logger.printableModes.contains(.development) else { return }
         print("[com.kuring.service] [\(time)]\n🚨 \(log)")
