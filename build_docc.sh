@@ -18,13 +18,5 @@ echo "🔨 DOCC 문서 빌드를 시작합니다..."
 xcodebuild docbuild -scheme "${PROJECT_NAME}" \
     -destination generic/platform=iOS \
     OTHER_DOCC_FLAGS="--output-path ${DOCS_DIR} --transform-for-static-hosting --hosting-base-path ${HOSTING_BASE_PATH}"
-#swift package \
-#    --allow-writing-to-directory "${DOCS_DIR}" \
-#    generate-documentation \
-#    --target "${TARGET_NAME}" \
-#    --disable-indexing \
-#    --output-path "${DOCS_DIR}" \
-#    --transform-for-static-hosting \
-#    --hosting-base-path "${HOSTING_BASE_PATH}"
 
 echo "🎉 성공적으로 완료하였습니다!"
