@@ -17,8 +17,7 @@ mkdir -p "./${DOCS_DIR}"
 echo "🔨 DOCC 문서 빌드를 시작합니다..."
 xcodebuild docbuild -scheme "${PROJECT_NAME}" \
     -destination generic/platform=iOS \
-    OTHER_DOCC_FLAGS="--transform-for-static-hosting --hosting-base-path ${HOSTING_BASE_PATH}" \
-    DOCC_OUTPUT_DIR="./${DOCS_DIR}"
+    OTHER_DOCC_FLAGS="--output-path ${DOCS_DIR} --transform-for-static-hosting --hosting-base-path ${HOSTING_BASE_PATH}"
 #swift package \
 #    --allow-writing-to-directory "${DOCS_DIR}" \
 #    generate-documentation \
