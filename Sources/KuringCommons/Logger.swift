@@ -87,8 +87,13 @@ public class Logger {
         guard Logger.printableModes.contains(.production) else { return }
         print("[com.kuring.service] [\(time)]\n✅ \(String(describing: log))")
 #endif
-        LoggerCore.shared.logs.append(Log(time: "[\(time)]",
-                                          message: "✅ \(String(describing: log))"))
+        if let log = log {
+            LoggerCore.shared.logs.append(Log(time: "[\(time)]",
+                                              message: "\(log)"))
+        } else {
+            LoggerCore.shared.logs.append(Log(time: "[\(time)]",
+                                              message: "\(String(describing: log))"))
+        }
     }
     
     /// `log` 와 함께 에러메세지를 출력하고 `action` 을 실행합니다.
@@ -122,7 +127,6 @@ public class Logger {
         guard Logger.printableModes.contains(.production) else { return }
         print("[com.kuring.service] [\(time)]\n🚨 \(log))")
 #endif
-        
         LoggerCore.shared.logs.append(Log(time: "[\(time)]",
                                           message: "🚨 \(log)"))
     }
