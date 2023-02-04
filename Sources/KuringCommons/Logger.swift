@@ -86,7 +86,7 @@ public class Logger {
         }
         guard Logger.printableModes.contains(.production) else { return }
         print("[com.kuring.service] [\(time)]\n✅ \(String(describing: log))")
-#endif  
+#endif
         LoggerCore.shared.logs.append(Log(time: "[\(time)]",
                                           message: "✅ \(String(describing: log))"))
     }
@@ -140,10 +140,10 @@ public class Logger {
     }
 }
 
-struct Log: Hashable {
-    let publisher: String = "[com.kuring.service]"
-    var time: String
-    var message: String
+public struct Log: Hashable {
+    public let publisher: String = "[com.kuring.service]"
+    public var time: String
+    public var message: String
 }
 
 public class LoggerCore {
