@@ -86,7 +86,9 @@ public class Logger {
         }
         guard Logger.printableModes.contains(.production) else { return }
         print("[com.kuring.service] [\(time)]\n✅ \(String(describing: log))")
-#endif
+#endif  
+        LoggerCore.shared.logs.append(Log(time: "[\(time)]",
+                                          message: "✅ \(String(describing: log))"))
     }
     
     /// `log` 와 함께 에러메세지를 출력하고 `action` 을 실행합니다.
@@ -120,6 +122,9 @@ public class Logger {
         guard Logger.printableModes.contains(.production) else { return }
         print("[com.kuring.service] [\(time)]\n🚨 \(log))")
 #endif
+        
+        LoggerCore.shared.logs.append(Log(time: "[\(time)]",
+                                          message: "🚨 \(log)"))
     }
     
     /// 에러가 존재할 때만 로그를 프린트하고 `action` 을 실행합니다..
@@ -133,4 +138,16 @@ public class Logger {
         guard let error = error else { return }
         self.error(error.localizedDescription, action: action)
     }
+}
+
+struct Log: Hashable {
+    let publisher: String = "[com.kuring.service]"
+    var time: String
+    var message: String
+}
+
+public class LoggerCore {
+    public static let shared = LoggerCore()
+    
+    @Published var logs: [Log] = []
 }
