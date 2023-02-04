@@ -149,5 +149,5 @@ public struct Log: Hashable {
 public class LoggerCore {
     public static let shared = LoggerCore()
     
-    @Published var logs: [Log] = []
+    @Published public var logs: [Log] = []
 }
