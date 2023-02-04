@@ -144,6 +144,11 @@ public struct Log: Hashable {
     public let publisher: String = "[com.kuring.service]"
     public var time: String
     public var message: String
+    
+    public init(time: String, message: String) {
+        self.time = time
+        self.message = message
+    }
 }
 
 public class LoggerCore {
