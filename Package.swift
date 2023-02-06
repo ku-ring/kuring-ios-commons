@@ -27,8 +27,9 @@ let package = Package(
                 .process("Assets.xcassets")
             ]
         ),
-//        .testTarget(
-//            name: "KuringCommonsTests",
-//            dependencies: ["KuringCommons"]),
+        .testTarget(
+            name: "KuringCommonsTests",
+            dependencies: ["KuringCommons"]
+        ),
     ]
 )

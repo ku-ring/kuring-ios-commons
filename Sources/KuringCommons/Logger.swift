@@ -42,6 +42,9 @@ public class Logger {
         case production
     }
     
+    /// 로그를 모아두는 컬렉터들입니다. Key-Value 형태로 저장합니다.
+    public static var collectors: [String: LogCollector] = [:]
+    
     /// 로거에 주입할 커스텀 액션이 실행될 큐 입니다. ``Logger`` 에서 제공되는 기본 로그 메세지는 별도의 큐를 지정하지 않습니다.
     /// ```swift
     /// Logger.queue.async {
@@ -56,7 +59,7 @@ public class Logger {
     /// ```
     public static var printableModes: [RunMode] = [.development]
     
-    /// `log` 와 함께 일반 로그 메세지를 출력하고 `action` 을 실행합니다.
+    /// `log` 와 함께 일반 로그 메세지를 출력하고 `action` 을 실행합니다. `collectorIDs` 를 지정하면 해당 `LogCollector` 에 `log`가 저장됩니다.
     /// ```swift
     /// Logger.debug("Hi") {
     ///     // 파이어베이스, 앱스플라이어 등의 추가적인 로거를 사용할 수 있습니다.
@@ -65,7 +68,7 @@ public class Logger {
     /// // [com.kuring.service] [2022년 5월 4일 수요일 오후 11:23:00 GMT+9]
     /// // ✅ Hi
     /// ```
-    public static func debug(_ log: Any?, action: (() -> Void)? = nil) {
+    public static func debug(_ log: Any?, collectorIDs: [String] = [], action: (() -> Void)? = nil) {
         let time: String
         if #available(iOS 15.0, *) {
             time = Date().formatted(
@@ -77,19 +80,38 @@ public class Logger {
             dateFormatter.dateFormat = "yyyy-MM-dd-EE hh:mm a"
             time = dateFormatter.string(from: Date())
         }
+        LogCollector.main.logs.append(
+            Log(time: "[\(time)]", message: "✅ \(String(describing: log))")
+        )
 #if DEBUG
         guard Logger.printableModes.contains(.development) else { return }
         print("[com.kuring.service] [\(time)]\n✅ \(String(describing: log))")
+        
+        collectorIDs.forEach { id in
+            guard let collector = Logger.collectors[id] else { return }
+            guard collector.collectingRule == .development else { return }
+            collector.logs.append(
+                Log(time: "[\(time)]", message: "✅ \(String(describing: log))")
+            )
+        }
 #else
         Logger.queue.async {
             action?()
         }
         guard Logger.printableModes.contains(.production) else { return }
         print("[com.kuring.service] [\(time)]\n✅ \(String(describing: log))")
+        
+        collectorIDs.forEach { id in
+            guard let collector = Logger.collectors[id] else { return }
+            guard collector.collectingRule == .production else { return }
+            collector.logs.append(
+                Log(time: "[\(time)]", message: "✅ \(String(describing: log))")
+            )
+        }
 #endif
     }
     
-    /// `log` 와 함께 에러메세지를 출력하고 `action` 을 실행합니다.
+    /// `log` 와 함께 에러메세지를 출력하고 `action` 을 실행합니다. `collectorIDs` 를 지정하면 해당 `LogCollector` 에 `log`가 저장됩니다.
     /// ```swift
     /// Logger.error("Hi") {
     ///     // 파이어베이스, 앱스플라이어 등의 추가적인 로거를 사용할 수 있습니다.
@@ -98,7 +120,7 @@ public class Logger {
     /// // [com.kuring.service] [2022년 5월 4일 수요일 오후 11:23:00 GMT+9]
     /// // 🚨 Hi
     /// ```
-    public static func error(_ log: String, action: (() -> Void)? = nil) {
+    public static func error(_ log: String, collectorIDs: [String] = [], action: (() -> Void)? = nil) {
         let time: String
         if #available(iOS 15.0, *) {
             time = Date().formatted(
@@ -110,15 +132,34 @@ public class Logger {
             dateFormatter.dateFormat = "yyyy-MM-dd-EE hh:mm a"
             time = dateFormatter.string(from: Date())
         }
+        LogCollector.main.logs.append(
+            Log(time: "[\(time)]", message: "🚨 \(log)")
+        )
 #if DEBUG
         guard Logger.printableModes.contains(.development) else { return }
         print("[com.kuring.service] [\(time)]\n🚨 \(log)")
+        
+        collectorIDs.forEach { id in
+            guard let collector = Logger.collectors[id] else { return }
+            guard collector.collectingRule == .development else { return }
+            collector.logs.append(
+                Log(time: "[\(time)]", message: "🚨 \(log)")
+            )
+        }
 #else
         Logger.queue.async {
             action?()
         }
         guard Logger.printableModes.contains(.production) else { return }
         print("[com.kuring.service] [\(time)]\n🚨 \(log))")
+        
+        collectorIDs.forEach { id in
+            guard let collector = Logger.collectors[id] else { return }
+            guard collector.collectingRule == .production else { return }
+            collector.logs.append(
+                Log(time: "[\(time)]", message: "🚨 \(log)")
+            )
+        }
 #endif
     }
     
@@ -129,8 +170,8 @@ public class Logger {
     ///     if let error = error { return }
     /// }
     /// ```
-    public static func error(_ error: Error?, action: (() -> Void)? = nil) {
+    public static func error(_ error: Error?, collectorIDs: [String] = [], action: (() -> Void)? = nil) {
         guard let error = error else { return }
-        self.error(error.localizedDescription, action: action)
+        self.error(error.localizedDescription, collectorIDs: collectorIDs, action: action)
     }
 }
